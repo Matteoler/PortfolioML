@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+
+    --ssbw: 0px;
+    --screen: 100dvh;
+
+    --header-height-mobile: calc(var(--header) + var(--header-link));
+
+    overflow-y: scroll;
+
+    @screen lg {
+      /* Assurez-vous que `to-rem()` est traité correctement si vous utilisez un préprocesseur */
+      --nav: #{to-rem(54)}; /* Utilisation avec un préprocesseur CSS */
+      --header: #{to-rem(90)};
+    }
+
+    --columns: 8; // Add a semicolon at the end of the line;
+
+    @media (min-width: 1440px) {
+      --columns: 12;
+    }
+  }
+
+  /* Correction de la syntaxe de @supports */
+  @supports (height: 100vh) {
+    html {
+      --screen-height-min: 100svh;
+      --screen-height-max: 100lvh;
+    }
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    overscroll-behavior: none;
+    white-space: pre-wrap;
+  }
+
+  body, html {
+    overscroll-behavior: contain;
+  }
+
+  p, h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+
+  em {
+    font-style: normal;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
