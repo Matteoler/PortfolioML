@@ -31,7 +31,7 @@ export const Grid = () => {
     <div className={`fixed inset-0 w-full h-full z-[999] pointer-events-none ${isVisible ? '' : 'hidden'}`}>
       <div className="flex h-full w-full span-gap-1 px-grid">
         {Array.from({ length: columns }).map((_, i) => (
-          <div key={i} className="bg-red opacity-60 h-full flex-1"></div>
+          <div key={i} className="border-2 border-red opacity-60 h-full flex-1"></div>
         ))}
       </div>
     </div>

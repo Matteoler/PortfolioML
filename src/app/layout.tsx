@@ -1,17 +1,10 @@
 import type { Metadata } from "next";
 import { Lenis } from "@/components";
-import {Inter} from "next/font/google";
+import {SongMyung} from "@/fonts/Song_Myung";
+import {neutro} from "@/fonts/Neutro";
 import "@/style/globals.scss";
 import clsx from "clsx";
 import { Grid } from "@/components/grid/Grid";
-import { rhapsody } from "@/fonts/Rhapsody";
-
-const inter = Inter(
-  {
-    subsets: ["latin"],
-    variable: "--font-inter",
-  }
-);
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,9 +21,9 @@ export default function RootLayout({
       <body
         className={clsx(
           'font-normal bg-black text-white',
-          inter.className,
-          inter.variable,
-          rhapsody.variable,
+          SongMyung.className,
+          SongMyung.variable,
+          neutro.variable,
         )}
       >
         {children}

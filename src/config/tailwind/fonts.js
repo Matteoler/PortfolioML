@@ -1,6 +1,6 @@
 const FontFamily = {
-    sans: ['var(--font-inter)', 'sans-serif'],
-    serif: ['var(--font-serif)', 'serif'],
+    SongMyung: ['var(--font-songmyung)', 'serif'],
+    Neutro: ['var(--font-neutro)', 'serif'],
 }
 
 const MIN_SIZE = 10
