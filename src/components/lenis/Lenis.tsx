@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import LenisLib from "@studio-freight/lenis";
+import LenisLib from "lenis";
 
 export const Lenis = () => {
   const lenis = useRef<LenisLib | null>(null);

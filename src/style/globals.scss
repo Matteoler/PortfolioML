@@ -13,11 +13,6 @@
 
     overflow-y: scroll;
 
-    @screen lg {
-      /* Assurez-vous que `to-rem()` est traité correctement si vous utilisez un préprocesseur */
-      --nav: #{to-rem(54)}; /* Utilisation avec un préprocesseur CSS */
-      --header: #{to-rem(90)};
-    }
 
     --columns: 8; // Add a semicolon at the end of the line;
 
@@ -65,4 +60,8 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+}
+
+.active {
+  font-weight: bold;
 }

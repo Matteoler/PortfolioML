@@ -1,12 +1,13 @@
 const FontFamily = {
     SongMyung: ['var(--font-songmyung)', 'serif'],
     Neutro: ['var(--font-neutro)', 'serif'],
+    SegoeUI: ['var(--font-segoeui)', 'serif'],
 }
 
 const MIN_SIZE = 10
 const MAX_SIZE = 128
 
-const largeSpecificSizing = [206,160,150,134]
+const largeSpecificSizing = [206, 160, 150, 134]
 
 const letterSpacing = {
     tighter: '-.04em',
@@ -27,16 +28,16 @@ const lineHeight = {
     moderate: '1.4',
 }
 
-const regularSizing = new Array(MAX_SIZE - MIN_SIZE).fill(null).map((item, idx) => MIN_SIZE + idx)
+const regularSizing = new Array(MAX_SIZE - MIN_SIZE + 1).fill(null).map((item, idx) => MIN_SIZE + idx)
 const sizes = [...regularSizing, ...largeSpecificSizing]
 
 const max = px => {
-    return 'max(${px}px, ${px / 16}rem)'
+    return `max(${px}px, ${px / 16}rem)`
 }
 
 const fontSize = sizes.reduce((result, size) => {
     result[size] = [max(size)]
     return result
-} , {})
+}, {})
 
 module.exports = {fontSize, FontFamily, letterSpacing, lineHeight, sizes}
