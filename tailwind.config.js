@@ -1,19 +1,29 @@
-const { FontFamily, fontSize, letterSpacing, lineHeight } = import(
-  "./src/config/tailwind/fonts"
-);
-const colors = import("./src/config/tailwind/colors");
-const screens = import("./src/config/tailwind/screens");
-const spacing = import("./src/config/tailwind/spacing");
-const height = import("./src/config/tailwind/height");
-const width = import("./src/config/tailwind/width");
-const plugin = import("tailwindcss/plugin");
-const grid = import("./src/config/tailwind/grid");
+import {
+  FontFamily,
+  fontSize,
+  letterSpacing,
+  lineHeight,
+} from "./src/config/tailwind/fonts";
+import colors from "./src/config/tailwind/colors";
+import screens from "./src/config/tailwind/screens";
+import spacing from "./src/config/tailwind/spacing";
+import height from "./src/config/tailwind/height";
+import width from "./src/config/tailwind/width";
+import plugin from "tailwindcss/plugin";
+import grid from "./src/config/tailwind/grid";
 
-const createVariables = (columns, gutter, margin) => {
+const generateClassUtilities = (property, classSuffix, calculation) => {
+  const utilities = {};
+  for (let i = 0; i <= 12; i++) {
+    utilities[`.span-${classSuffix}-${i}`] = { [property]: calculation(i) };
+  }
+  return utilities;
+};
+
+const createGridVariables = (columns, gutter, margin) => {
   const windowWidth = "100vw";
   const gridWidth = `calc(${windowWidth} - 2 * ${margin}px)`;
-  const columnWidth = `(${gridWidth} - (${columns} - 1) * ${gutter}px) / ${columns}`;
-
+  const columnWidth = `calc((${gridWidth} - (${columns} - 1) * ${gutter}px) / ${columns})`;
   return {
     "--columns": columns,
     "--gutter": `${gutter}px`,
@@ -23,20 +33,14 @@ const createVariables = (columns, gutter, margin) => {
   };
 };
 
-const generateUtilities = (property, classSuffix, calcFunc) => {
-  const utilities = {};
-  for (let i = 0; i <= 12; i++) {
-    utilities[`.span-${classSuffix}-${i}`] = { [property]: calcFunc(i) };
-  }
-  return utilities;
-};
+const contentPaths = [
+  "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+  "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+  "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+];
 
 const config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: contentPaths,
   theme: {
     extend: {
       fontFamily: FontFamily,
@@ -56,22 +60,22 @@ const config = {
   },
   safelist: [],
   plugins: [
-    (await plugin)(({ addBase }) => {
+    plugin(({ addBase }) => {
       addBase({
-        ":root": createVariables(
+        ":root": createGridVariables(
           grid.mobile.columns,
           grid.mobile.gutter,
           grid.mobile.margin,
         ),
         "@media (min-width: 768px)": {
-          ":root": createVariables(
+          ":root": createGridVariables(
             grid.tablet.columns,
             grid.tablet.gutter,
             grid.tablet.margin,
           ),
         },
         "@media (min-width: 1440px)": {
-          ":root": createVariables(
+          ":root": createGridVariables(
             grid.desktop.columns,
             grid.desktop.gutter,
             grid.desktop.margin,
@@ -79,25 +83,51 @@ const config = {
         },
       });
     }),
-    (await plugin)(({ addUtilities }) => {
+    plugin(({ addUtilities }) => {
       addUtilities({
-        ...generateUtilities(
+        ...generateClassUtilities(
           "width",
           "w",
           (i) =>
             `calc(${i} * var(--column) + ${Math.max(0, i - 1)} * var(--gutter))`,
         ),
-        ...generateUtilities(
+        ...generateClassUtilities("gap", "gap-wide", (i) => i),
+        ...generateClassUtilities(
+          "gap",
+          "gap-wider",
+          (i) =>
+            `calc(${i} * var(--column) + ${Math.min(12, i + 1)} * var(--gutter))`,
+        ),
+        ...generateClassUtilities(
+          "gap",
+          "gap-wide",
+          (i) => `calc(${i} * var(--column) + ${i} * var(--gutter))`,
+        ),
+        ...generateClassUtilities(
+          "width",
+          "w-wider",
+          (i) =>
+            `calc(${i} * var(--column) + ${Math.min(12, i + 1)}* var(--gutter))`,
+        ),
+        ...generateClassUtilities(
+          "width",
+          "w-wide",
+          (i) => `calc(${i} * var(--column) + ${i} * var(--gutter))`,
+        ),
+        ...generateClassUtilities(
           "gap",
           "gap",
           (i) =>
-            `calc(${Math.max(0, i - 1)} * var(--column) + ${i} * var(--gutter))`,
+            `calc( ${i} * var(--column) + ${Math.max(0, i - 1)} * var(--gutter))`,
         ),
         ".margin-p-1": { padding: `var(--margin)` },
         ".margin-pt-1": { "padding-top": `var(--margin)` },
         ".px-grid": {
           paddingLeft: `var(--margin)`,
           paddingRight: `var(--margin)`,
+        },
+        ".gap-grid": {
+          gap: `var(--gutter)`,
         },
         ".grid-container": {
           display: "block",
