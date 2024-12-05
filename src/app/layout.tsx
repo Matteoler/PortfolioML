@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Lenis } from "@/components";
-import {SongMyung} from "@/fonts/Song_Myung";
-import {neutro} from "@/fonts/Neutro";
-import {Segoe_UI} from "@/fonts/Segoe_UI";
-import "@/style/globals.scss";
+import { SongMyung } from "@/fonts/Song_Myung";
+import { neutro } from "@/fonts/Neutro";
+import { Segoe_UI } from "@/fonts/Segoe_UI";
+import "../../globals.scss";
 import clsx from "clsx";
 import { Grid } from "@/components/grid/Grid";
 import React from "react";
@@ -22,16 +22,16 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={clsx(
-          'font-normal text-black bg-LightBlue',
-            SongMyung.className,
-            SongMyung.variable,
-            neutro.variable,
-            Segoe_UI.variable
+          "font-normal text-black bg-LightBlue",
+          SongMyung.className,
+          SongMyung.variable,
+          neutro.variable,
+          Segoe_UI.variable,
         )}
       >
         {children}
         <Grid />
-        <Lenis key={'lenis${(children as React.ReactElement)?.key}'}/>
+        <Lenis key={"lenis${(children as React.ReactElement)?.key}"} />
       </body>
     </html>
   );
